@@ -8,5 +8,6 @@ target 'Pokedex' do
   # Pods for Pokedex
   pod 'Alamofire'
   pod 'Kingfisher'
+  pod 'UIImageColors'
 
 end

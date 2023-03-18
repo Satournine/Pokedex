@@ -24,6 +24,7 @@ class MainViewController: UIViewController {
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         
         fetchPokemon()
+
        
     }
     
@@ -53,7 +54,7 @@ extension MainViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokedexCollectionViewCell", for: indexPath) as! PokedexCollectionViewCell
-        cell.setup()
+        //cell.setup()
         response.sort { $0.order < $1.order }
         cell.configure(with: response[indexPath.row])
         
