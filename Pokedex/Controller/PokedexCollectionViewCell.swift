@@ -16,20 +16,27 @@ class PokedexCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var PokemonNoLabel: UILabel!
     
     
+    override func layoutSubviews() {
+            super.layoutSubviews()
+            layer.cornerRadius = 20
+            layer.masksToBounds = true
+        }
+    
+
+    
     func setup(){
-        PokemonImageView.backgroundColor = .purple
-        PokemonNameLabel.text = "Squirtle"
-        PokemonNoLabel.text = "151"
+        PokemonImageView.alpha = 0
+        PokemonNameLabel.alpha = 0
+        PokemonNoLabel.alpha = 0
+        backgroundColor = .white
        
     }
     
     func configure(with pokemon: PokemonDetails){
-        PokemonImageView.alpha = 0
-        PokemonNameLabel.alpha = 0
-        PokemonNoLabel.alpha = 0
+        
         //let pokemon = response[indexPath.row]
-        PokemonNameLabel.text = pokemon.name
-        PokemonNoLabel.text = String(pokemon.id)
+        PokemonNameLabel.text = pokemon.name.capitalized
+        PokemonNoLabel.text = "#\(pokemon.id)"
         DispatchQueue.main.async{
                 if let url = URL(string: pokemon.sprites.url){
                     self.PokemonImageView.kf.setImage(with: url)
@@ -37,13 +44,13 @@ class PokedexCollectionViewCell: UICollectionViewCell {
                     switch result{
                     case.success(let value):
                         let colors = value.image.getColors()
-                        self.PokemonImageView.backgroundColor = colors?.background
+                        self.backgroundColor = colors?.background
                     case.failure(let error):
                         print(error)
                     }
                 }
             }
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.4) {
                 self.PokemonImageView.alpha = 1
                 self.PokemonNameLabel.alpha = 1
                 self.PokemonNoLabel.alpha = 1
