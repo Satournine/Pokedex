@@ -15,6 +15,8 @@ class PokedexCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var PokemonNameLabel: UILabel!
     @IBOutlet weak var PokemonNoLabel: UILabel!
     
+    let viewModel = PokemonViewModel()
+    
     
     override func layoutSubviews() {
             super.layoutSubviews()
@@ -33,34 +35,45 @@ class PokedexCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with pokemon: PokemonDetails){
-        
+        print(pokemon)
         //let pokemon = response[indexPath.row]
         PokemonNameLabel.text = pokemon.name.capitalized
         PokemonNoLabel.text = "#\(pokemon.id)"
-        DispatchQueue.main.async{
-                if let url = URL(string: pokemon.sprites.url){
-                    self.PokemonImageView.kf.setImage(with: url)
-                    KingfisherManager.shared.retrieveImage(with: url) { result in
-                    switch result{
-                    case.success(let value):
-                        let colors = value.image.getColors()
-                        self.backgroundColor = colors?.background
-                    case.failure(let error):
-                        print(error)
-                    }
-                }
-            }
-            UIView.animate(withDuration: 0.4) {
-                self.PokemonImageView.alpha = 1
-                self.PokemonNameLabel.alpha = 1
-                self.PokemonNoLabel.alpha = 1
+        
+        viewModel.retrievePokemonImage(with: pokemon.sprites.url){ image, colors in
+            DispatchQueue.main.async {
+                self.PokemonImageView.image = image
+                self.backgroundColor = colors?.background
+                
+                UIView.animate(withDuration: 0.4) {
+                                self.PokemonImageView.alpha = 1
+                                self.PokemonNameLabel.alpha = 1
+                                self.PokemonNoLabel.alpha = 1
+                            }
             }
             
         }
         
-        
-        
-        
+//        DispatchQueue.main.async{
+//                if let url = URL(string: pokemon.sprites.url){
+//                    self.PokemonImageView.kf.setImage(with: url)
+//                    KingfisherManager.shared.retrieveImage(with: url) { result in
+//                    switch result{
+//                    case.success(let value):
+//                        let colors = value.image.getColors()
+//                        self.backgroundColor = colors?.background
+//                    case.failure(let error):
+//                        print(error)
+//                    }
+//                }
+//            }
+//            UIView.animate(withDuration: 0.4) {
+//                self.PokemonImageView.alpha = 1
+//                self.PokemonNameLabel.alpha = 1
+//                self.PokemonNoLabel.alpha = 1
+//            }
+//
+//        }
         
     }
     

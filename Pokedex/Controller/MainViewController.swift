@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 class MainViewController: UIViewController {
     
     
@@ -18,31 +17,40 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        collectionView.backgroundColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+       
+        self.fetchPokemon()
         
-        fetchPokemon()
+        
 
        
     }
     
     fileprivate func fetchPokemon() {
-        viewModel.fetchPokemon { [weak self] result in
-            guard let self = self else { return }
-            switch result{
-            case .success(let data):
-                print(data)
-                self.response.append(data)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.viewModel.fetchPokemon { [weak self] result in
+                guard let self = self else { return }
+                switch result{
+                case .success(let data):
+                    //print(data)
+                    self.response.append(data)
+                    self.response.sort{$0.order < $1.order}
+                    DispatchQueue.main.async {
+//                        let indexPaths = (currentCount..<self.response.count).map{IndexPath(row: $0, section: 0)}
+//                        self.collectionView.insertItems(at: indexPaths)
+                        self.collectionView.reloadData()
+                        
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
             }
         }
-    }
+
+        }
 
 }
 
@@ -55,7 +63,7 @@ extension MainViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokedexCollectionViewCell", for: indexPath) as! PokedexCollectionViewCell
         //cell.setup()
-        response.sort { $0.order < $1.order }
+        
         cell.configure(with: response[indexPath.row])
         
         return cell 
@@ -77,11 +85,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout{
 
 extension MainViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedPokemon = response[indexPath.row]
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailBoard") as? PokemonDetailViewController? else{return}
-        detailsVC!.pokemon = selectedPokemon
-        navigationController?.pushViewController(detailsVC!, animated: true)
+        
+       let selectedPokemon = response[indexPath.row]
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailBoard") as? PokemonDetailViewController else{return}
+       detailsVC.pokemon = selectedPokemon
+       navigationController?.pushViewController(detailsVC, animated: true)
     }
     
     

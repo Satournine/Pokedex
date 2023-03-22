@@ -14,13 +14,14 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var PokeName: UILabel!
     @IBOutlet weak var PokeTypeOne: UILabel!
     @IBOutlet weak var PokeTypeTwo: UILabel!
+    @IBOutlet var detailUIView: UIView!
     
     var pokemon: PokemonDetails?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDetails()
-
+        
         
     }
     

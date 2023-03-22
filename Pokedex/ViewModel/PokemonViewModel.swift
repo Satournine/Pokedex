@@ -7,6 +7,8 @@
 
 import Foundation
 import Alamofire
+import Kingfisher
+import UIImageColors
 
 
 class PokemonViewModel{
@@ -15,6 +17,7 @@ class PokemonViewModel{
     var pokemonData: PokemonData?
     var pokemonDetails: PokemonDetails?
     //var detailURL: String?
+    
     
     func fetchPokemon(completion: @escaping (Result<PokemonDetails, Error>) -> Void){
         AF.request(baseURL).responseDecodable(of: PokemonData.self) { response in
@@ -53,6 +56,26 @@ class PokemonViewModel{
                     print("Error Here\(error)")
                 }
             }
+    }
+    
+    func retrievePokemonImage(with urlString: String, completion: @escaping(UIImage?, UIImageColors?) -> Void){
+        guard let url = URL(string: urlString) else{
+            completion(nil,nil)
+            return
+        }
+        DispatchQueue.main.async {
+            
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result{
+                case .success(let value):
+                    let colors = value.image.getColors()
+                    completion(value.image, colors)
+                case .failure(let error):
+                    print(error)
+                    completion(nil,nil)
+                }
+            }
+        }
     }
     
 }

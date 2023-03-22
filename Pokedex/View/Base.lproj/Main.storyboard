@@ -139,6 +139,7 @@
                         <outlet property="PokeName" destination="9oM-CJ-HDZ" id="QWE-TW-mNi"/>
                         <outlet property="PokeTypeOne" destination="eXm-lG-hfg" id="49r-2f-wVU"/>
                         <outlet property="PokeTypeTwo" destination="4sa-k1-1lw" id="a3W-7o-w2S"/>
+                        <outlet property="detailUIView" destination="koO-dI-9e6" id="bec-RC-k0E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EeT-o9-7id" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
