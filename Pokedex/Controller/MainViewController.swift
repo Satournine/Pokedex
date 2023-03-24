@@ -10,10 +10,11 @@ class MainViewController: UIViewController {
     
     
     @IBOutlet weak var collectionView: UICollectionView!
-
+    var activityIndicator: UIActivityIndicatorView!
     let viewModel = PokemonViewModel()
     private var response: [PokemonDetails] = []
     
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +22,15 @@ class MainViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
-       
-        self.fetchPokemon()
         
         
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .purple
 
-       
+        UINavigationBar.appearance().standardAppearance = appearance // for scrolling bg color
+        UINavigationBar.appearance().compactAppearance = appearance // not sure why it's here, but u can remove it and still works
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance // for large title bg color
+        self.fetchPokemon()
     }
     
     fileprivate func fetchPokemon() {
@@ -42,7 +46,8 @@ class MainViewController: UIViewController {
 //                        let indexPaths = (currentCount..<self.response.count).map{IndexPath(row: $0, section: 0)}
 //                        self.collectionView.insertItems(at: indexPaths)
                         self.collectionView.reloadData()
-                        
+   
+                    
                     }
                 case .failure(let error):
                     print(error)
@@ -75,11 +80,13 @@ extension MainViewController: UICollectionViewDataSource{
 
 extension MainViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 2)
+            return UIEdgeInsets(top: 10, left: 2, bottom: 0, right: 2)
         }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 195, height: 195)
+        let width = view.frame.width/2.1
+        let height = view.frame.height/4.3
+        return CGSize(width: width, height: height)
     }
 }
 
