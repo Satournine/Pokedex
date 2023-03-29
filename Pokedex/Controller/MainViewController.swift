@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     let viewModel = PokemonViewModel()
     private var response: [PokemonDetails] = []
     
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class MainViewController: UIViewController {
         
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .purple
-
+        
         UINavigationBar.appearance().standardAppearance = appearance // for scrolling bg color
         UINavigationBar.appearance().compactAppearance = appearance // not sure why it's here, but u can remove it and still works
         UINavigationBar.appearance().scrollEdgeAppearance = appearance // for large title bg color
@@ -43,20 +43,20 @@ class MainViewController: UIViewController {
                     self.response.append(data)
                     self.response.sort{$0.order < $1.order}
                     DispatchQueue.main.async {
-//                        let indexPaths = (currentCount..<self.response.count).map{IndexPath(row: $0, section: 0)}
-//                        self.collectionView.insertItems(at: indexPaths)
+                        //                        let indexPaths = (currentCount..<self.response.count).map{IndexPath(row: $0, section: 0)}
+                        //                        self.collectionView.insertItems(at: indexPaths)
                         self.collectionView.reloadData()
-   
-                    
+                        
+                        
                     }
                 case .failure(let error):
                     print(error)
                 }
             }
         }
-
-        }
-
+        
+    }
+    
 }
 
 extension MainViewController: UICollectionViewDataSource{
@@ -71,7 +71,7 @@ extension MainViewController: UICollectionViewDataSource{
         
         cell.configure(with: response[indexPath.row])
         
-        return cell 
+        return cell
     }
     
     
@@ -80,8 +80,8 @@ extension MainViewController: UICollectionViewDataSource{
 
 extension MainViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 10, left: 2, bottom: 0, right: 2)
-        }
+        return UIEdgeInsets(top: 10, left: 2, bottom: 0, right: 2)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width/2.1
@@ -92,12 +92,15 @@ extension MainViewController: UICollectionViewDelegateFlowLayout{
 
 extension MainViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! PokedexCollectionViewCell
         
-       let selectedPokemon = response[indexPath.row]
-       let storyboard = UIStoryboard(name: "Main", bundle: nil)
-       guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailBoard") as? PokemonDetailViewController else{return}
-       detailsVC.pokemon = selectedPokemon
-       navigationController?.pushViewController(detailsVC, animated: true)
+        let selectedPokemon = response[indexPath.row]
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailBoard") as? PokemonDetailViewController else{return}
+        detailsVC.pokemon = selectedPokemon
+        detailsVC.backgroundColor = cell.backgroundColor
+        print(cell.backgroundColor)
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
     
     
