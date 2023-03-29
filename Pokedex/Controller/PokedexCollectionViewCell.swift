@@ -54,27 +54,6 @@ class PokedexCollectionViewCell: UICollectionViewCell {
             
         }
         
-//        DispatchQueue.main.async{
-//                if let url = URL(string: pokemon.sprites.url){
-//                    self.PokemonImageView.kf.setImage(with: url)
-//                    KingfisherManager.shared.retrieveImage(with: url) { result in
-//                    switch result{
-//                    case.success(let value):
-//                        let colors = value.image.getColors()
-//                        self.backgroundColor = colors?.background
-//                    case.failure(let error):
-//                        print(error)
-//                    }
-//                }
-//            }
-//            UIView.animate(withDuration: 0.4) {
-//                self.PokemonImageView.alpha = 1
-//                self.PokemonNameLabel.alpha = 1
-//                self.PokemonNoLabel.alpha = 1
-//            }
-//
-//        }
-        
     }
     
     
