@@ -60,21 +60,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CE6F5D7229BD3E97002B3D27 /* Controller */ = {
+		CE05F31029D52198007F46EC /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				CE7FB50129B5352E00B69937 /* MainViewController.swift */,
+				CE05F31129D521AD007F46EC /* Cell */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CE05F31129D521AD007F46EC /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				CEF55A8829B69B9600009998 /* PokedexCollectionViewCell.swift */,
-				CE7FB50129B5352E00B69937 /* MainViewController.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CE05F31229D521C4007F46EC /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				CEA7952129C663AF002F83F7 /* PokemonDetailViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		CE05F31329D521D4007F46EC /* Splash */ = {
+			isa = PBXGroup;
+			children = (
 				CEF4204C29CD112200022E53 /* SplashViewController.swift */,
 			);
-			path = Controller;
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		CE6F5D7329BD3EAA002B3D27 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				CE7FB50329B5352E00B69937 /* Main.storyboard */,
-				CEA7952129C663AF002F83F7 /* PokemonDetailViewController.swift */,
+				CE05F31229D521C4007F46EC /* Detail */,
+				CE05F31029D52198007F46EC /* Main */,
+				CE05F31329D521D4007F46EC /* Splash */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -131,7 +156,6 @@
 				CE6F5D7929BD4322002B3D27 /* ViewModel */,
 				CE6F5D7429BD3ECB002B3D27 /* Model */,
 				CE6F5D7329BD3EAA002B3D27 /* View */,
-				CE6F5D7229BD3E97002B3D27 /* Controller */,
 				CE7FB4FD29B5352E00B69937 /* AppDelegate.swift */,
 				CE7FB4FF29B5352E00B69937 /* SceneDelegate.swift */,
 				CE7FB50629B5352E00B69937 /* Assets.xcassets */,

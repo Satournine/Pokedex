@@ -99,7 +99,7 @@ extension MainViewController: UICollectionViewDelegate{
         guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailBoard") as? PokemonDetailViewController else{return}
         detailsVC.pokemon = selectedPokemon
         detailsVC.backgroundColor = cell.backgroundColor
-        print(cell.backgroundColor)
+        print(cell.backgroundColor ?? .white)
         navigationController?.pushViewController(detailsVC, animated: true)
     }
     
