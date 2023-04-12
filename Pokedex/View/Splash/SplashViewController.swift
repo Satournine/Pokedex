@@ -10,10 +10,12 @@ import Network
 
 class SplashViewController: UIViewController {
     
+    @IBOutlet weak var loadingImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        loadingAnimation()
+        view.backgroundColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
         // Check internet connectivity
         if checkInternetConnectivity() {
             let alert = UIAlertController(title: "No Internet Connection", message: "Please check your internet connection and try again.", preferredStyle: .alert)
@@ -34,6 +36,21 @@ class SplashViewController: UIViewController {
             self.present(navigationController, animated: true, completion: nil)
         }
     }
+    
+    func loadingAnimation(){
+        loadingImage.center = self.view.center
+        
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotationAnimation.fromValue = 0.0
+        rotationAnimation.toValue = Double.pi * 2.0
+        rotationAnimation.duration = 2.0
+        rotationAnimation.repeatCount = .infinity
+
+        // add the rotation animation to the image view
+        loadingImage.layer.add(rotationAnimation, forKey: "rotationAnimation")
+        
+    }
+    
     // Function to check internet connectivity
     func checkInternetConnectivity() -> Bool {
         let monitor = NWPathMonitor()

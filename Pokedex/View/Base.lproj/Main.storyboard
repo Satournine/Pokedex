@@ -184,18 +184,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sd0-M0-aLa">
-                                <rect key="frame" x="186" y="438" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="wWh-d6-DpZ">
+                                <rect key="frame" x="115" y="356" width="184" height="184"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="184" id="cOp-0G-gIx"/>
+                                    <constraint firstAttribute="height" constant="184" id="jbH-Hh-vIF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ccO-hC-hwC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wWh-d6-DpZ" firstAttribute="leading" secondItem="ccO-hC-hwC" secondAttribute="leading" constant="115" id="JKX-54-Xbm"/>
+                            <constraint firstItem="ccO-hC-hwC" firstAttribute="trailing" secondItem="wWh-d6-DpZ" secondAttribute="trailing" constant="115" id="aaT-Gi-VhT"/>
+                            <constraint firstItem="ccO-hC-hwC" firstAttribute="bottom" secondItem="wWh-d6-DpZ" secondAttribute="bottom" constant="322" id="dpE-fj-1mA"/>
+                            <constraint firstItem="wWh-d6-DpZ" firstAttribute="top" secondItem="ccO-hC-hwC" secondAttribute="top" constant="264" id="mNa-Vl-KvW"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Evj-Xa-M6d"/>
+                    <connections>
+                        <outlet property="loadingImage" destination="wWh-d6-DpZ" id="xGy-Ea-O8l"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSh-WN-m3V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -221,6 +230,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pokeball" width="600" height="600"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

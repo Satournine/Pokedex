@@ -6,14 +6,15 @@
 //
 
 import UIKit
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBOutlet weak var collectionView: UICollectionView!
     var activityIndicator: UIActivityIndicatorView!
     let viewModel = PokemonViewModel()
     private var response: [PokemonDetails] = []
-    
+    var filteredResponse: [PokemonDetails] = []
+    var isSearching = false
     
     
     override func viewDidLoad() {
@@ -30,6 +31,7 @@ class MainViewController: UIViewController {
         UINavigationBar.appearance().standardAppearance = appearance // for scrolling bg color
         UINavigationBar.appearance().compactAppearance = appearance // not sure why it's here, but u can remove it and still works
         UINavigationBar.appearance().scrollEdgeAppearance = appearance // for large title bg color
+        setupSearchControler()
         self.fetchPokemon()
     }
     
@@ -57,19 +59,41 @@ class MainViewController: UIViewController {
         
     }
     
+    fileprivate func setupSearchControler(){
+        let search = UISearchController(searchResultsController: nil)
+        search.searchBar.delegate = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search Pokemon"
+        navigationItem.searchController = search
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 2{
+            isSearching = true
+            filteredResponse = response.filter({$0.name.range(of: searchText, options: .caseInsensitive) != nil})
+        } else {
+            isSearching = false
+            filteredResponse.removeAll()
+        }
+        collectionView.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    
 }
 
 extension MainViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return response.count
+        return isSearching ? filteredResponse.count : response.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokedexCollectionViewCell", for: indexPath) as! PokedexCollectionViewCell
         //cell.setup()
-        
-        cell.configure(with: response[indexPath.row])
+        let pokemon = isSearching ? filteredResponse[indexPath.row] : response[indexPath.row]
+        cell.configure(with: pokemon)
         
         return cell
     }
@@ -94,7 +118,8 @@ extension MainViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! PokedexCollectionViewCell
         
-        let selectedPokemon = response[indexPath.row]
+        let selectedPokemon = isSearching ? filteredResponse[indexPath.row] : response[indexPath.row]
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let detailsVC = storyboard.instantiateViewController(withIdentifier: "detailBoard") as? PokemonDetailViewController else{return}
         detailsVC.pokemon = selectedPokemon
